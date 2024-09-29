@@ -1,0 +1,91 @@
+<div class="calendar-container">
+  <mat-toolbar color="primary">
+    <span>Calendar</span>
+    <span class="spacer"></span>
+    <button mat-raised-button color="accent" (click)="openAddAppointment()">Add Appointment</button>
+  </mat-toolbar>
+
+  <div cdkDropListGroup class="priority-container">
+    <div class="priority-group">
+      <h3>High Priority</h3>
+      <div cdkDropList id="highPriorityList" [cdkDropListData]="highPriorityAppointments"
+        [cdkDropListConnectedTo]="['mediumPriorityList', 'lowPriorityList']" (cdkDropListDropped)="drop($event)">
+        <div *ngFor="let appointment of highPriorityAppointments" cdkDrag class="appointment-item">
+          <div class="appointment-actions">
+            <button mat-button color="warn" (click)="deleteAppointment(appointment, 'High')">Delete</button>
+          </div>
+          <div class="appointment-header">
+            <span class="appointment-title">{{ appointment.title }}</span>
+            <span class="appointment-dateTime">{{ appointment.dateTime  | date:'short'}}</span>
+          </div>
+
+          <div class="appointment-row">
+            <span class="appointment-label">Priority:</span>
+            <span class="appointment-value">{{ appointment.priority }}</span>
+          </div>
+
+          <div class="appointment-row">
+            <span class="appointment-label">Description:</span>
+            <span class="appointment-value">{{ appointment.description }}</span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="priority-group">
+      <h3>Medium Priority</h3>
+      <div cdkDropList id="mediumPriorityList" [cdkDropListData]="mediumPriorityAppointments"
+        [cdkDropListConnectedTo]="['highPriorityList', 'lowPriorityList']" (cdkDropListDropped)="drop($event)">
+        <div *ngFor="let appointment of mediumPriorityAppointments" cdkDrag class="appointment-item">
+
+          <div class="appointment-actions">
+            <button mat-button color="warn" (click)="deleteAppointment(appointment, 'Medium')">Delete</button>
+          </div>
+          <div class="appointment-header">
+            <span class="appointment-title">{{ appointment.title }}</span>
+            <span class="appointment-dateTime">{{ appointment.dateTime  | date:'short'}}</span>
+          </div>
+
+          <div class="appointment-row">
+            <span class="appointment-label">Priority:</span>
+            <span class="appointment-value">{{ appointment.priority }}</span>
+          </div>
+
+          <div class="appointment-row" *ngIf="!!appointment?.description && appointment?.description !== ''">
+            <span class="appointment-label">Description:</span>
+            <span class="appointment-value">{{ appointment.description }}</span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="priority-group">
+      <h3>Low Priority</h3>
+      <div cdkDropList id="lowPriorityList" [cdkDropListData]="lowPriorityAppointments"
+        [cdkDropListConnectedTo]="['highPriorityList', 'mediumPriorityList']" (cdkDropListDropped)="drop($event)">
+        <div *ngFor="let appointment of lowPriorityAppointments" cdkDrag class="appointment-item">
+          <div class="appointment-actions">
+            <button mat-button color="warn" (click)="deleteAppointment(appointment, 'Low')">Delete</button>
+          </div>
+          <div class="appointment-header">
+            <span class="appointment-title">{{ appointment.title }}</span>
+            <span class="appointment-dateTime">{{ appointment.dateTime  | date:'short'}}</span>
+          </div>
+
+          <div class="appointment-row">
+            <span class="appointment-label">Priority:</span>
+            <span class="appointment-value">{{ appointment.priority }}</span>
+          </div>
+
+
+          <div class="appointment-row" *ngIf="!!appointment?.description && appointment?.description !== ''">
+            <span class="appointment-label">Description:</span>
+            <span class="appointment-value">{{ appointment.description }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
